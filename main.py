@@ -18,4 +18,4 @@ train_removed_punctuation = train_obj.remove_punctuation()
 train_words = train_obj.word_tokenize()
 train_output_file = train_obj.save(eval_dir + "/train_tokens.txt")
 
-print(train_words[:25]) # Print first 5 words
+print(train_words[:5]) # Print first 5 words
