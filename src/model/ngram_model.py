@@ -11,7 +11,7 @@ class NgramModel:
         Parameters:
         folder_path(string): path of the folder containing tokens training data
         """
-        self.folder_path = folder_path + "/test_output.txt"
+        self.folder_path = folder_path + "/train_tokens.txt"
     
     def build_vocab(self, path=None):
         """Builds vocabulary from training tokens."""
@@ -19,7 +19,7 @@ class NgramModel:
         from collections import Counter
         UNK_THRESHOLD = int(os.getenv('UNK_THRESHOLD', 3))
         word_counts = Counter()
-        input_txt = path + "/test_output.txt" if path else self.folder_path
+        input_txt = path + "/train_tokens.txt" if path else self.folder_path
         output_json = Path(os.getenv('VOCAB', 'vocab.json'))
         output_json.parent.mkdir(parents=True, exist_ok=True)  # Ensure output directory exists
 
@@ -37,7 +37,7 @@ class NgramModel:
 
         # 4. Save the sorted vocabulary to .json
         with open(output_json, 'w', encoding='utf-8') as f:
-            json.dump(sorted(list(vocab)), f, indent=None)
+            json.dump(sorted(list(vocab)), f, indent=4)
     
     def build_counts_and_probabilities(self, path=None):
         """Builds n-gram counts and probabilities."""
@@ -149,12 +149,12 @@ def main():
     test_build_vocab = test_file_obj.build_vocab() # Build vocabulary
     test_build_counts_and_probabilities = test_file_obj.build_counts_and_probabilities() # Build counts and probabilities
     test_probs = test_file_obj.lookup(["i","play", "work"]) # Example lookup
-    print(test_probs) # Print the probabilities for the context
+    #print(test_probs) # Print the probabilities for the context
     model_vocab=test_file_obj.load() # Load the model and vocab
     model=model_vocab[0] # Extract model
-    print(model) # Print the loaded model and vocab
+    #print(model) # Print the loaded model and vocab
     vocab=model_vocab[1] # Extract vocabulary
-    print(vocab) # Print the loaded vocabulary
+    #print(vocab) # Print the loaded vocabulary
 
            
     
