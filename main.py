@@ -1,3 +1,4 @@
+import sys
 from dotenv import load_dotenv
 import os
 from pathlib import Path
@@ -22,7 +23,7 @@ train_sentences = train_obj.sentence_tokenize()
 train_removed_punctuation = train_obj.remove_punctuation()
 train_words = train_obj.word_tokenize()
 train_output_file = train_obj.save(eval_dir + "/train_tokens.txt")
-print(train_words[:1]) # Print first tokenized sentences  
+#print(train_words[:1]) # Print first tokenized sentences  
 
 Ngram_obj = NgramModel(eval_dir)
 Ngram_vocab = Ngram_obj.build_vocab() # Build vocabulary
@@ -31,9 +32,23 @@ test_probs = Ngram_obj.lookup(["holmes","said", "to"]) # Example lookup
 model_vocab=Ngram_obj.load() # Load the model and vocab
 model=model_vocab[0] # Extract model
 vocab=model_vocab[1] # Extract vocabulary
-print(test_probs) # Print the probabilities for the context
+#print(test_probs) # Print the probabilities for the context
 
 predictor_obj = Predictor(Ngram_obj, train_obj)
-input_text = "it came out"
-predictions = predictor_obj.predict_next(input_text)
-print(f"Predicted next words for '{input_text}': {predictions}")
+try:
+        while True:
+            print("\nEnter a context (or type 'quit' to exit):")
+            user_input = input("\n> ").strip()
+            if user_input.lower() == 'quit':
+                print("Goodbye.")
+                break
+            if not user_input:
+                continue
+            
+            predictions = predictor_obj.predict_next(user_input)
+            print(f"Predictions: {predictions}")
+except KeyboardInterrupt:
+        print("\nGoodbye.")
+        sys.exit(0)
+#input_text = "it came out"
+#print(f"Predicted next words for '{input_text}': {predictions}")
