@@ -84,7 +84,8 @@ class Normalizer:
     def sentence_tokenize(self):
         """Tokenizes text into sentences."""
         import nltk
-        # nltk.download('punkt_tab')
+        nltk.download('punkt')
+        nltk.download('punkt_tab')
         from nltk.tokenize import sent_tokenize
         self.sentences = sent_tokenize(self.text_file)
         return self.sentences
@@ -92,7 +93,8 @@ class Normalizer:
     def word_tokenize(self):
         """Tokenizes text into words."""
         import nltk
-        # nltk.download('punkt_tab')
+        nltk.download('punkt')
+        nltk.download('punkt_tab')
         from nltk.tokenize import word_tokenize
         self.words = [word_tokenize(sentence) for sentence in self.sentences]
         return self.words
